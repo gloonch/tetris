@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type Board struct {
 	Width  int
 	Height int
@@ -15,21 +17,27 @@ func NewBoard(width, height int) *Board {
 }
 
 func (b *Board) Print(active *Piece) {
+	reset := "\033[0m"
 	for y := 0; y < b.Height; y++ {
 		for x := 0; x < b.Width; x++ {
 			cell := b.Cells[y][x]
+			printed := false
 			if active != nil && y >= active.Y && y < active.Y+len(active.Shape) && x >= active.X && x < active.X+len(active.Shape[0]) {
 				if active.Shape[y-active.Y][x-active.X] != 0 {
-					cell = active.Shape[y-active.Y][x-active.X]
+					// Print active piece with its color
+					fmt.Print(active.Color + string(active.Shape[y-active.Y][x-active.X]) + reset)
+					printed = true
 				}
 			}
-			if cell == 0 {
-				print(".")
-			} else {
-				print(string(cell))
+			if !printed {
+				if cell == 0 {
+					fmt.Print(".")
+				} else {
+					fmt.Print(string(cell))
+				}
 			}
 		}
-		println("")
+		fmt.Println("")
 	}
 }
 

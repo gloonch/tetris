@@ -47,14 +47,27 @@ var shapes = [][][]rune{
 type Piece struct {
 	Shape [][]rune
 	X, Y  int
+	Color string // ANSI color code
+}
+
+var shapeColors = []string{
+	"\033[33m", // Yellow for square
+	"\033[36m", // Cyan for line
+	"\033[35m", // Magenta for L
+	"\033[34m", // Blue for L reversed
+	"\033[32m", // Green for T
+	"\033[31m", // Red for S
+	"\033[37m", // White for Z
 }
 
 func NewPiece() *Piece {
 	rand.Seed(time.Now().UnixNano())
-	shape := shapes[rand.Intn(len(shapes))]
+	idx := rand.Intn(len(shapes))
+	shape := shapes[idx]
 	x := 4 // center of the screen
 	y := 0
-	return &Piece{Shape: shape, X: x, Y: y}
+	color := shapeColors[idx]
+	return &Piece{Shape: shape, X: x, Y: y, Color: color}
 }
 
 func (p *Piece) Rotate() {
