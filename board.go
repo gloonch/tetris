@@ -29,17 +29,16 @@ func (b *Board) Print(active *Piece) {
 			printed := false
 			if active != nil && y >= active.Y && y < active.Y+len(active.Shape) && x >= active.X && x < active.X+len(active.Shape[0]) {
 				if active.Shape[y-active.Y][x-active.X] != 0 {
-					// Print active piece with its color and [ ]
-					fmt.Print(active.Color + "[ ]" + reset)
+					// Print active piece with its color
+					fmt.Print(active.Color + string(active.Shape[y-active.Y][x-active.X]) + reset)
 					printed = true
 				}
 			}
 			if !printed {
 				if cell.Value != 0 {
-					fmt.Print(cell.Color + "[ ]" + reset)
+					fmt.Print(cell.Color + string(cell.Value) + reset)
 				} else {
-					// Use space or underscore for empty cell
-					fmt.Print(" ") // or use "_" if you prefer
+					fmt.Print(".")
 				}
 			}
 		}
