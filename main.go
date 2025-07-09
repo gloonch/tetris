@@ -48,6 +48,11 @@ mainloop:
 			}
 		default:
 			if paused {
+				clearScreen()
+				fmt.Printf("Score: %d\n", score)
+				// print a box with the text "PAUSED" in the center
+				fmt.Println("\n\nPAUSED")
+				board.Print(piece)
 				time.Sleep(100 * time.Millisecond)
 				continue
 			}
